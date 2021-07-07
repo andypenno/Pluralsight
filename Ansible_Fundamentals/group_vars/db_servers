@@ -1,0 +1,4 @@
+# Variables for the 'db_servers'
+
+db_server_packages:
+  - mariadb

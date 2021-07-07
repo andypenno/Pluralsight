@@ -1,0 +1,22 @@
+---
+# tasks file for developers
+
+- name: "Create developers group"
+  group:
+    name: "developers"
+    state: "present"
+
+- name: "Loop over users, create user, generate ssh key and add to developers group"
+  loop: "{{ users }}"
+  no_log: true
+  notify:
+  - "Reboot System"
+  user:
+    name: "{{ item.name }}"
+    comment: "{{ item.description }}"
+    password: "{{ item.password }}"
+    group: "developers"
+    generate_ssh_key: true
+    ssh_key_bits: 2048
+    ssh_key_file: ".ssh/id_rsa"
+    state: "present"

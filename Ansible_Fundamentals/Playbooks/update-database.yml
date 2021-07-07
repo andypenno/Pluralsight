@@ -1,0 +1,38 @@
+# Andrew Pennington - 05/07/2021
+---
+- name: "Safely update the database"
+  hosts: "db_servers"
+  become: true
+
+  tasks:
+    - name: "Update the database packages"
+      when: "'db_servers' in group_names"
+      block:
+        - name: "Display an update message"
+          debug:
+            msg: "Updating database components"
+
+        - name: "Update the database packages to the latest version"
+          notify:
+            - "Reboot System"
+          package:
+            name: "{{ db_server_packages }}"
+            state: "latest"
+      rescue:
+        - name: "Display an error message"
+          debug:
+            msg: "Updating failed, restarting database to recover."
+
+        - name: "Restart the database components"
+          service:
+            name: "{{ db_server_packages }}"
+      always:
+        - name: "Notify user of impending reboot"
+          debug:
+            msg: "Updating process complete, restarting imminently."
+
+  handlers:
+    - name: "Reboot System"
+      no_log: true
+      debug:  
+      # reboot:  # Would use this here instead of debug, but my docker hosts don't support that command

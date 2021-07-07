@@ -1,0 +1,7 @@
+[web_servers]
+web_01 ansible_ssh_host=172.25.0.1 ansible_ssh_port=5000
+web_02 ansible_ssh_host=172.25.0.1 ansible_ssh_port=5001
+
+[db_servers]
+db_01 ansible_ssh_host=172.25.0.1 ansible_ssh_port=6000
+db_02 ansible_ssh_host=172.25.0.1 ansible_ssh_port=6001

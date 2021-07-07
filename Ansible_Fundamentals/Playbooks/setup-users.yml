@@ -1,0 +1,36 @@
+# Andrew Pennington - 05/07/2021
+---
+- name: "Create developers group and populate with users"
+  hosts: "all"
+  become: true
+  # vars:
+  #   users:
+  #     test:
+  #       uname: "test"
+  #       description: "Test User Account"
+      
+
+  tasks:
+    - name: "Create developers group"
+      group:
+        name: "developers"
+        state: "present"
+
+    # Encrypt a file using:  ansible-vault encrypt <path/to/file>
+    - name: "Load the default password from an encrypted file"
+      include_vars:
+        file: "../Secrets/default_password"
+
+    - name: "Loop over users, create user, generate ssh key and add to developers group"
+      loop: "{{ users }}"
+      no_log: true
+      user:
+        name: "{{ item.name }}"
+        comment: "{{ item.description }}"
+        password: "{{ item.password }}"
+        group: "developers"
+        generate_ssh_key: true
+        ssh_key_bits: 2048
+        ssh_key_file: ".ssh/id_rsa"
+        state: "present"
+

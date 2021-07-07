@@ -1,0 +1,22 @@
+# Andrew Pennington - 05/07/2021
+---
+- name: "Deploy file using a Jinja2 template"
+  hosts: "all"
+  become: true
+
+  tasks:
+    - name: "Deploy the message of the day template"
+      template:
+        src: "../Templates/motd.j2"
+        dest: "/etc/motd"
+        owner: "root"
+        group: "root"
+        mode: "0644"
+    
+    - name: "Deploy the hosts template"
+      template:
+        src: "../Templates/hosts.j2"
+        dest: "/etc/hosts.extra"    # used 'hosts.extra' instead of 'hosts' as this is immutable on containers
+        owner: "root"
+        group: "root"
+        mode: "0644"

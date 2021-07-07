@@ -1,0 +1,37 @@
+version: "3.3"
+services:
+  web_client_1:
+    image: robertdebock/docker-centos-openssh:latest
+    container_name: web_client_1
+    restart: unless-stopped
+    ports: 
+      - "5000:22"
+    volumes:
+      - ./ssh:/root/.ssh/
+
+  web_client_2:
+    image: robertdebock/docker-centos-openssh:latest
+    container_name: web_client_2
+    restart: unless-stopped
+    ports: 
+      - "5001:22"
+    volumes:
+      - ./ssh:/root/.ssh/
+
+  db_client_1:
+    image: robertdebock/docker-centos-openssh:latest
+    container_name: db_client_1
+    restart: unless-stopped
+    ports: 
+      - "6000:22"
+    volumes:
+      - ./ssh:/root/.ssh/
+
+  db_client_2:
+    image: robertdebock/docker-centos-openssh:latest
+    container_name: db_client_2
+    restart: unless-stopped
+    ports: 
+      - "6001:22"
+    volumes:
+      - ./ssh:/root/.ssh/

@@ -1,0 +1,4 @@
+# Variables for the 'web_servers'
+
+web_server_packages:
+  - nginx

@@ -1,0 +1,14 @@
+# Global variables
+
+general_packages:
+  - nano
+  - git
+
+users:
+  - name: test
+    description: "Test User Account"
+    password: "{{ default_password }}"
+  
+  - name: andrew
+    description: "Andrew Pennington"
+    password: "{{ default_password }}"

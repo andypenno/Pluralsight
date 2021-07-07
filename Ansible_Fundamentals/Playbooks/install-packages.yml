@@ -1,0 +1,35 @@
+# Andrew Pennington - 05/07/2021
+---
+- name: "Install necessary packages to all systems"
+  hosts: "all"
+  become: true
+
+  tasks:
+    - name: "Install general packages if required"
+      notify:
+        - "Reboot System"
+      package:
+        name: "{{ general_packages }}"
+        state: "present"
+    
+    - name: "Install webserver packages if required"
+      when: "'web_servers' in group_names"
+      notify:
+        - "Reboot System"
+      package:
+        name: "{{ web_server_packages }}"
+        state: "present"
+    
+    - name: "Install database packages if required"
+      when: "'db_servers' in group_names"
+      notify:
+        - "Reboot System"
+      package:
+        name: "{{ db_server_packages }}"
+        state: "present"
+  
+  handlers:
+    - name: "Reboot System"
+      no_log: true
+      debug:  
+      # reboot:  # Would use this here instead of debug, but my docker hosts don't support that command

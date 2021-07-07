@@ -1,0 +1,28 @@
+# Andrew Pennington - 06/07/2021
+---
+- name: "Create developers group and populate with users"
+  hosts: "all"
+  become: true
+      
+  # roles:
+  #   - "developers"
+
+  tasks:
+    # Encrypt a file using:  ansible-vault encrypt <path/to/file>
+    - name: "Load the default password from an encrypted file"
+      include_vars:
+        file: "../Secrets/default_password"
+
+    - name: "Call the role using the encrypted default password"
+      include_role:
+        name: "developers"
+      # Don't need to include the vars section
+      # The local 'default_password' overrides the role default
+
+    - name: "Call the role using a different default password"
+      include_role:
+        name: "developers"
+      vars:
+        default_password: "Hello World!"
+
+

@@ -1,0 +1,7 @@
+---
+# handlers file for developers
+
+- name: "Reboot System"
+  no_log: true
+  debug:  
+  # reboot:  # Would use this here instead of debug, but my docker hosts don't support that command

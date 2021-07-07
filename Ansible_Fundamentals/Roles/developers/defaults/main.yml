@@ -1,0 +1,9 @@
+---
+# defaults file for developers
+
+default_password: "abc123"
+  
+users:
+  - name: test
+    description: "Test User Account"
+    password: "{{ default_password }}"
